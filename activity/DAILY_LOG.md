@@ -7,3 +7,4 @@ on current `main`. One line per day, appended by the
 
 | Date (UTC) | Version | Result |
 |---|---|---|
+| 2026-07-23 | 0.1.0 | ✅ 5 findings, tests green |
