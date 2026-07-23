@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field, asdict
+from dataclasses import asdict, dataclass, field
 from typing import Any
 
 
@@ -69,7 +69,7 @@ class Inventory:
         return {"root": self.root, "artifacts": [a.to_dict() for a in self.artifacts]}
 
     @classmethod
-    def from_dict(cls, data: dict[str, Any]) -> "Inventory":
+    def from_dict(cls, data: dict[str, Any]) -> Inventory:
         inv = cls(root=data.get("root", ""))
         for a in data.get("artifacts", []):
             inv.artifacts.append(

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import html
 from collections import Counter
-from datetime import date
+from datetime import datetime, timezone
 
 from ..analysis.matcher import SEVERITIES, Finding
 from ..inventory.models import Inventory
@@ -121,7 +121,7 @@ def render_html(
 <style>{_CSS}</style></head>
 <body><div class="wrap">
 <h1>{e(release_label)} — Integration Impact Report</h1>
-<div class="sub">Generated {date.today().isoformat()} · release-impact-agent</div>
+<div class="sub">Generated {datetime.now(tz=timezone.utc).date().isoformat()} · release-impact-agent</div>
 <div class="tiles">{tile_html}</div>
 <div class="controls">{buttons}</div>
 <table><thead><tr><th>Severity</th><th>Artifact</th><th>Release item</th>

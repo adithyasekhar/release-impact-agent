@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from collections import Counter
-from datetime import date
+from datetime import datetime, timezone
 
 from ..analysis.matcher import SEVERITIES, Finding
 from ..inventory.models import Inventory
@@ -32,7 +32,8 @@ def render_markdown(
     out: list[str] = []
     out.append(f"# {release_label} — Integration Impact Report")
     out.append("")
-    out.append(f"*Generated {date.today().isoformat()} by release-impact-agent*")
+    today = datetime.now(tz=timezone.utc).date().isoformat()
+    out.append(f"*Generated {today} by release-impact-agent*")
     out.append("")
     out.append("## Summary")
     out.append("")

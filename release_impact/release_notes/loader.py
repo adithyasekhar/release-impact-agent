@@ -115,7 +115,7 @@ def load_csv(path: Path) -> list[ReleaseItem]:
         colmap = _map_columns(list(headers))
         items: list[ReleaseItem] = []
         for i, row in enumerate(reader, start=1):
-            def get(field_name: str, default: str = "") -> str:
+            def get(field_name: str, default: str = "", row: dict = row) -> str:
                 col = colmap.get(field_name)
                 return (row.get(col) or default).strip() if col else default
 

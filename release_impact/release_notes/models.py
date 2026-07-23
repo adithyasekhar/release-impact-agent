@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field, asdict
+from dataclasses import asdict, dataclass, field
 from typing import Any
 
 # Item types, roughly ordered by how much attention they demand.
@@ -38,6 +38,6 @@ class ReleaseItem:
         return asdict(self)
 
     @classmethod
-    def from_dict(cls, d: dict[str, Any]) -> "ReleaseItem":
+    def from_dict(cls, d: dict[str, Any]) -> ReleaseItem:
         known = {f for f in cls.__dataclass_fields__}  # type: ignore[attr-defined]
         return cls(**{k: v for k, v in d.items() if k in known})

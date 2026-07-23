@@ -8,7 +8,7 @@ text on top of these findings — it never invents matches.
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field, asdict
+from dataclasses import asdict, dataclass, field
 from typing import Any
 
 from ..inventory.models import Artifact, Inventory

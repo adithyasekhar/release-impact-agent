@@ -57,7 +57,7 @@ def classify_with_claude(
         return classify_fallback(findings)
 
     try:
-        import anthropic  # noqa: PLC0415
+        import anthropic
     except ImportError:
         return classify_fallback(findings)
 
@@ -86,7 +86,7 @@ def classify_with_claude(
             if text.startswith("```"):
                 text = text.strip("`").lstrip("json").strip()
             results = json.loads(text)
-            for f, r in zip(batch, results):
+            for f, r in zip(batch, results, strict=False):
                 sev = str(r.get("severity", f.severity)).lower()
                 if sev in SEVERITIES:
                     f.severity = sev
