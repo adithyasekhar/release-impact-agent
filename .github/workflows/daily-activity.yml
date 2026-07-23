@@ -1,0 +1,42 @@
+# Daily agent health run — exercises the full pipeline against the bundled
+# sample workspace and appends one line to activity/DAILY_LOG.md.
+
+name: Daily activity
+
+on:
+  schedule:
+    - cron: "23 15 * * *"   # daily 15:23 UTC ≈ 8:23 AM Phoenix
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  daily:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e ".[dev]"
+      - name: Run pipeline health check
+        id: health
+        run: |
+          set -e
+          pytest -q
+          release-impact run tests/fixtures/studio_workspace \
+            --notes examples/release-notes-2026R2-sample.csv \
+            --release-label 2026R2 --no-claude --outdir /tmp/daily
+          FINDINGS=$(python -c "import json;print(len(json.load(open('/tmp/daily/findings.json'))['findings']))")
+          VERSION=$(python -c "import release_impact;print(release_impact.__version__)")
+          echo "findings=$FINDINGS" >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+      - name: Append to daily log and commit
+        run: |
+          echo "| $(date -u +%F) | ${{ steps.health.outputs.version }} | ✅ ${{ steps.health.outputs.findings }} findings, tests green |" >> activity/DAILY_LOG.md
+          git config user.name "Adithya Sekhar Gummadi"
+          git config user.email "adithyasekhar.gummadi9@gmail.com"
+          git add activity/DAILY_LOG.md
+          git commit -m "chore: daily agent health run $(date -u +%F)"
+          git push
