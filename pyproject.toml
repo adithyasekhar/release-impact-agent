@@ -1,0 +1,45 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "release-impact-agent"
+version = "0.1.0"
+description = "Workday Release Impact Agent — scan your integration inventory, match it against Workday release notes, and get a prioritized impact report."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+authors = [{ name = "Adithya Sekhar Gummadi" }]
+keywords = ["workday", "release", "integrations", "agent", "mcp", "claude"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Office/Business",
+]
+dependencies = []
+
+[project.optional-dependencies]
+claude = ["anthropic>=0.40"]
+mcp = ["mcp>=1.2"]
+dev = ["pytest>=8", "ruff>=0.6"]
+
+[project.scripts]
+release-impact = "release_impact.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/adithyasekhar/release-impact-agent"
+Issues = "https://github.com/adithyasekhar/release-impact-agent/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["release_impact"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

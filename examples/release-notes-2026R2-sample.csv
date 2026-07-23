@@ -1,0 +1,8 @@
+Item ID,Title,Description,Type,Functional Area,Release,Setup Required
+WN-2026R2-001,Retirement of WWS versions v34.0 and earlier,"Web Service versions v34.0 and earlier are retired in this release. Integrations calling Human_Resources or Staffing at v34.0 or below must move to a supported version before the release window.",Retirement,Integrations,2026R2,Yes
+WN-2026R2-002,Get_Workers response adds Worker_Profile_Data element,"The Get_Workers operation in the Human_Resources Web Service now returns an additional Worker_Profile_Data element by default. Consumers with strict schema validation must update their XSD handling.",Change,HCM,2026R2,No
+WN-2026R2-003,Deprecation of Submit_Compensation_Change,"Submit_Compensation_Change in the Compensation Web Service is deprecated. Use Request_Compensation_Change instead. Planned removal in 2027R1.",Deprecation,Compensation,2026R2,No
+WN-2026R2-004,New REST workers endpoint pagination default,"The REST API workers endpoint changes its default page size from 100 to 50. Clients relying on the old default must pass an explicit limit parameter.",Change,Integrations,2026R2,No
+WN-2026R2-005,New Absence Accrual Engine,"Introduces a new absence accrual engine with real-time balance calculations. Automatically available; existing accrual configs are unaffected.",New Feature,Absence,2026R2,No
+WN-2026R2-006,Custom report field rename impacts RaaS,"Custom reports using the CF_Comp_Grade calculated field must be re-saved after upgrade; RaaS consumers of report INT002_Comp_Extract may see a field rename.",Breaking Change,Reporting,2026R2,Yes
+WN-2026R2-007,Payroll audit dashboard refresh,"The payroll audit dashboard gets a refreshed UI with drill-down. No integration surface.",Info,Payroll,2026R2,No

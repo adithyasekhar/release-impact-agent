@@ -1,0 +1,36 @@
+# Scheduled impact analysis — copy this workflow into the repo that holds
+# your Studio workspace / integration exports, or point the paths at a
+# checked-out copy.
+
+name: Release impact analysis
+
+on:
+  schedule:
+    - cron: "0 14 * * 1"   # Mondays 14:00 UTC — tune to your release-preview window
+  workflow_dispatch:
+
+jobs:
+  impact:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e ".[claude]"
+      - name: Run impact analysis
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          release-impact run ./workspace \
+            --notes ./release-notes/current.csv \
+            --outdir reports/ \
+            --slack \
+            --fail-on-critical
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: impact-report
+          path: reports/

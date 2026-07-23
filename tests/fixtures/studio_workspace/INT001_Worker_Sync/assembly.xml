@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cc:assembly xmlns:cc="http://www.capeclear.com/ns/assembly" name="INT001_Worker_Sync">
+  <cc:workday-in id="StartHere" routes-to="Init"/>
+  <cc:async-mediation id="Init" routes-to="CallGetWorkers">
+    <cc:steps>
+      <cc:log id="LogStart"><cc:log-message><cc:text>Starting worker sync</cc:text></cc:log-message></cc:log>
+    </cc:steps>
+  </cc:async-mediation>
+  <cc:local-out id="CallGetWorkers" store-message="none"
+    routes-response-to="CallTransform"
+    endpoint="vm://INT001_Worker_Sync/GetWorkers"/>
+  <cc:local-in id="GetWorkers" routes-to="DoGetWorkers"/>
+  <cc:async-mediation id="DoGetWorkers" handle-downstream-errors="true">
+    <cc:steps>
+      <cc:web-service-out id="InvokeGetWorkers"
+        endpoint="https://wd2-impl-services1.workday.com/ccx/service/example_tenant/Human_Resources/v34.0"
+        operation="Get_Workers"/>
+      <cc:log id="LogGot"><cc:log-message><cc:text>Get_Workers complete</cc:text></cc:log-message></cc:log>
+    </cc:steps>
+    <cc:send-error id="GetWorkersError" rethrow-error="false" routes-to="PutError"/>
+  </cc:async-mediation>
+  <cc:local-in id="Transform" routes-to="DoTransform"/>
+  <cc:async-mediation id="DoTransform" handle-downstream-errors="true">
+    <cc:steps>
+      <cc:transform id="ToVendorCSV" stylesheet="xslt/workers-to-csv.xsl"/>
+      <cc:http-out id="PostToVendor" endpoint="https://api.examplevendor.com/v2/employees"/>
+    </cc:steps>
+  </cc:async-mediation>
+</cc:assembly>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cc:assembly xmlns:cc="http://www.capeclear.com/ns/assembly" name="INT002_Comp_Report">
+  <cc:workday-in id="StartHere" routes-to="PullReport"/>
+  <cc:async-mediation id="PullReport" routes-to="Deliver">
+    <cc:steps>
+      <cc:http-out id="CallRaaS"
+        endpoint="https://wd2-impl-services1.workday.com/ccx/service/customreport2/example_tenant/int_user/INT002_Comp_Extract?format=csv"/>
+      <cc:http-out id="CallRest"
+        endpoint="https://wd2-impl-services1.workday.com/ccx/api/v1/example_tenant/workers"/>
+    </cc:steps>
+  </cc:async-mediation>
+  <cc:async-mediation id="Deliver">
+    <cc:steps>
+      <cc:web-service-out id="SubmitPayInput"
+        endpoint="https://wd2-impl-services1.workday.com/ccx/service/example_tenant/Compensation/v42.0"
+        operation="Submit_Compensation_Change"/>
+    </cc:steps>
+  </cc:async-mediation>
+</cc:assembly>

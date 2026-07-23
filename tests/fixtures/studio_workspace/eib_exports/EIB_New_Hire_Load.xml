@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wd:Integration_System xmlns:wd="urn:com.workday/bsvc">
+  <wd:Integration_System_Name>EIB_New_Hire_Load</wd:Integration_System_Name>
+  <wd:Template_Type>EIB</wd:Template_Type>
+  <wd:Web_Service_Operation_Reference>Hire_Employee</wd:Web_Service_Operation_Reference>
+  <wd:Web_Service>Staffing</wd:Web_Service>
+  <wd:Web_Service_Version>v33.0</wd:Web_Service_Version>
+  <wd:Direction>Inbound</wd:Direction>
+</wd:Integration_System>
