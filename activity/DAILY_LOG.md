@@ -26,3 +26,4 @@ on current `main`. One line per day, appended by the
 | 2026-08-09 | 0.1.0 | ✅ 5 findings, tests green |
 | 2026-08-10 | 0.1.0 | ✅ 5 findings, tests green |
 | 2026-08-11 | 0.1.0 | ✅ 5 findings, tests green |
+| 2026-08-12 | 0.1.0 | ✅ 5 findings, tests green |
