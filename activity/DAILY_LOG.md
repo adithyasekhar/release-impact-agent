@@ -120,3 +120,4 @@ on current `main`. One line per day, appended by the
 | 2026-11-11 | 0.1.0 | ✅ 5 findings, tests green |
 | 2026-11-12 | 0.1.0 | ✅ 5 findings, tests green |
 | 2026-11-13 | 0.1.0 | ✅ 5 findings, tests green |
+| 2026-11-14 | 0.1.0 | ✅ 5 findings, tests green |
